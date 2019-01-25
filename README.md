@@ -7,7 +7,7 @@ It is being developed to be displayed on a large LED Curtain Display.
 Requires Python and Pygame. Installing Pygame can be done through pip.    
 As its python it should work in any python3 environment.    
 Python can be installed into Visual Studio code to provide an editor, allthough it is not a full IDE it seems to work well.    
-[https://code.visualstudio.com/docs/languages/python](Instructions to install Python to VS Code)
+[Instructions to install Python to VS Code](https://code.visualstudio.com/docs/languages/python/)
 
 Code can be run by pressing f1 and selecting "Python: Run Python File in Terminal" or by right clicking the file and selecting the same option. Ensure you run Pong.py as that is the main file.
 
@@ -19,7 +19,7 @@ On a personal machine this may mean you need to add pip to your PATH variable. Y
 
 
 
-======    
+## Old
 ~~Version list     
 V0.01 17/01 JOSH & JONATHON - Pong.zip    
 V0.02 21/01 JOSH - Pong0.02.zip~~     
