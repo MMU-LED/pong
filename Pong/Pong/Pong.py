@@ -40,7 +40,8 @@ def main():
     clock = pygame.time.Clock()
     
     ball = Ball(screensize)
-    player_paddle = Paddle(screensize)
+    player_paddle = Paddle(screensize, screensize[0]-15)
+    player2_paddle = Paddle(screensize, 15)
 
     # Window Title
     pygame.display.set_caption('MMUARCADE2018')
@@ -77,6 +78,7 @@ def main():
 #####object updating phase
         
         player_paddle.update()
+        player2_paddle.update()
         ball.update(player_paddle)
         
 
@@ -93,6 +95,7 @@ def main():
         screen.fill((100,100,100))   
         
         player_paddle.render(screen)
+        player2_paddle.render(screen)
         ball.render(screen)
         #pygame uses 2 screens , so i think it renders 1 frame ahead ( not entirely sure )
         pygame.display.flip() 

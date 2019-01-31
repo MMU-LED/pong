@@ -1,13 +1,13 @@
 import pygame
 
 class Paddle(object):
-    def __init__(paddle, screensize):
+    def __init__(paddle, screensize, xPos):
 
         # im not sure what this does tbh , but it doesnt work without it :)
         paddle.screensize = screensize
 
         # starting x for paddle
-        paddle.centerx = int (screensize[0] - 15)
+        paddle.centerx = int (xPos)
         # starting y
         paddle.centery = int (screensize[1]*0.5)
         #paddle attributes        
