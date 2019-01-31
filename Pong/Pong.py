@@ -74,12 +74,25 @@ def main():
                 elif event.key == K_DOWN and player_paddle.direction == 1:
                     player_paddle.direction = 0
 
+                    # keyboard input for paddle
+            if event.type == KEYDOWN:
+                if event.key == K_UP:
+                    player2_paddle.direction = -1
+                elif event.key == K_DOWN:
+                    player2_paddle.direction = 1
+            # when no button is pressed , paddle stops moving
+            if event.type == KEYUP:
+                if event.key == K_UP and player2_paddle.direction == -1:
+                    player2_paddle.direction = 0
+                elif event.key == K_DOWN and player2_paddle.direction == 1:
+                    player2_paddle.direction = 0
+
               
 #####object updating phase
         
         player_paddle.update()
         player2_paddle.update()
-        ball.update(player_paddle)
+        ball.update(player_paddle, player2_paddle)
         
 
         if ball.hit_edge_left:

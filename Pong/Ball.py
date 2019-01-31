@@ -25,7 +25,7 @@ class Ball(object):
         ball.hit_edge_left = False
         ball.hit_edge_right = False
 
-    def update(ball, player_paddle):
+    def update(ball, player_paddle, player2_paddle):
 
         #movement for ball x + y
         ball.centerx += ball.direction[0] * ball.speed
@@ -49,6 +49,9 @@ class Ball(object):
 
         if ball.rect.colliderect(player_paddle.rect):
             ball.direction[0] = -1
+        
+        if ball.rect.colliderect(player2_paddle.rect):
+            ball.direction[0] = 1
 
     def render(ball, screen):
         pygame.draw.circle(screen, ball.color, ball.rect.center, ball.raduis, 0)
