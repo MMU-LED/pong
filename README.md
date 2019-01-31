@@ -14,10 +14,12 @@ Code can be run by pressing f1 and selecting "Python: Run Python File in Termina
 
 Pygame can be installed in VS Code by typing "pip install pygame" into the terminal window at the bottom.    
 
-Note: I have found issues with this, unsure what caused them. Try reopening and selecting environment again, as detailed in above link.
+Note: I have found issues with this, unsure what caused them. Try reopening and selecting environment again, as detailed in above link. Use Anaconda if it is installed.
+
 On a personal machine this may mean you need to add pip to your PATH variable. You will probably have to add the python scripts folder to it. Google this. Or don't.
 
 
+Installing the "Code Runner" extension will add a run button to the top right of the UI, However this is optional.
 
 ## Old
 ~~Version list     
