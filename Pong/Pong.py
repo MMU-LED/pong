@@ -105,7 +105,7 @@ def main():
 #####rendering phase
 
         #Black screen for background
-        screen.fill((100,100,100))   
+        screen.fill((0,0,0))   
         
         player_paddle.render(screen)
         player2_paddle.render(screen)
