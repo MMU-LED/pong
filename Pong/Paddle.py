@@ -1,47 +1,42 @@
-import keyboard
-import GenericObject
 import pygame
 
+class Paddle(object):
+    def __init__(paddle, screensize, xPos):
 
-class Paddle(GenericObject):
-    """description of class"""
+        # im not sure what this does tbh , but it doesnt work without it :)
+        paddle.screensize = screensize
 
-    x #variables
-    y
-    paddleHeight = 5*scale #j
-    top = y - paddleHeight
-    bottom = y + paddleHeight
-    #dx = 5*scale
-    s #speed :) 
-    dy = s*scale
+        # starting x for paddle
+        paddle.centerx = int (xPos)
+        # starting y
+        paddle.centery = int (screensize[1]*0.5)
+        #paddle attributes        
+        paddle.height = 100;
+        paddle.width = 10;
 
-    def __init__ (self, x, y, s): #initiate class (constructor?)
-        self.x = x
-        self.y = y 
-        self.s = s
+        paddle.rect = pygame.Rect(0, paddle.centery-int(paddle.height*0.5),
+                                 paddle.width, paddle.height)
 
-    def render(): #this needs doing
+        #red paddle to match our controller design
+        paddle.color = (255,100,100)
+        paddle.speed = 3
+        # if no input , paddle does not move
+        paddle.direction = 0
 
-    def move(): #move up & down 
-        if keyboard.is_pressed('up'):
-            print('You Pressed A Key!')
-            y = y + dy;
-        if keyboard.is_pressed('down'):
-            print('You Pressed A Key!')
-            y = y - dy;
+    def update (paddle):
 
-    def edgeDetect(): #stop user taking paddle of top of screen
-        if y - paddleheight >height:
-            y  = height
-        if y<0:
-            y = 0
+        paddle.centery += paddle.direction*paddle.speed
+        # paddle collision
+        paddle.rect.center = (paddle.centerx, paddle.centery)
 
-    def unfreeze(): #unfreeze method inherited from GenericObject
-        dy = 5*scale
+        #stops paddle exiting top and bottom of screen
+        if paddle.rect.top < 0:
+            paddle.rect.top = 0
+        if paddle.rect.bottom > paddle.screensize[1]-1:
+            paddle.rect.bottom = paddle.screensize[1] -1
 
-   # def bounce(self, Ball): #might be unecessary, needs testing
-        
-        
-         
 
- 
+    def render (paddle, screen):
+        pygame.draw.rect(screen, paddle.color, paddle.rect, 0)
+        # black outline around paddle , probs wont need this when displayed on LED screen
+        pygame.draw.rect(screen, (0,0,0), paddle.rect, 1)

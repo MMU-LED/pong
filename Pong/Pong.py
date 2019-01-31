@@ -5,7 +5,15 @@
 #etc etc
 #remember python does nesting by indentation, not by curly brackets :) 
 #~josh 21/01/19
+
+#created a main
+#updated the ball class to add collisions wth border of screen and winning conditions when hit either side of screen
+#created paddle class with player input ( up/down arrows) and collide with ball
+#-Aaron 30/01/2019
+
 from Ball import Ball
+
+from Paddle import Paddle
 
 import pygame, sys 
 #import pygame & sys - sys lets us exit the game
@@ -13,32 +21,85 @@ import pygame, sys
 from pygame.locals import *
 #useful imports - not fully sure what they're for though
 
-pygame.init()
-#display
 
-DISPLAY_SURFACE = pygame.display.set_mode((300,300))
-#create a new 'screen'/drawing surface - 300x300 resolution 
-#in pygame you have to create a 'surface' and then draw stuff on that surface similar to processing
-#you can have multiple surfaces on screen at once I think - think different menus in a game
 
-pygame.display.set_caption('MMUARCADE2018')
-#display placeholder caption on surface to show this is all actually working
+def main():
+    pygame.init() 
+    #display
+    scale = 1
+    height = 600*scale
+    width = 300*scale 
+    screensize = (height, width)
 
-#pygame.draw.circle(DISPLAY_SURFACE, (255,255,0), (50, 50), (10), 5);
-myBall = Ball(50, 50, 5, DISPLAY_SURFACE) #variables in ball (and presumably paddle) class not working 
-myBall.render()
+    #create a new 'screen'/drawing surface - 300x300 resolution 
+    #in pygame you have to create a 'surface' and then draw stuff on that surface similar to processing
+    #you can have multiple surfaces on screen at once I think - think different menus in a game
+    screen = pygame.display.set_mode((screensize))
+   
+    #limit and track FPS
+    clock = pygame.time.Clock()
+    
+    ball = Ball(screensize)
+    player_paddle = Paddle(screensize, screensize[0]-15)
+    player2_paddle = Paddle(screensize, 15)
 
-hello = True 
-while hello == True:
+    # Window Title
+    pygame.display.set_caption('MMUARCADE2018')
+  
+    #this is like void draw 
     #loop below forever
+    running = True 
+    while running: 
+        
+        #fps limiting/reporting phase
+        clock.tick(64) 
+        
+#####event handling phase
 
-    for event in pygame.event.get():
         #get user events like keypresses
-        if event.type == QUIT:
-        #if user wants to quit:
-            pygame.quit()
-            sys.exit()
-            #end game and close window
+        for event in pygame.event.get():          
+            if event.type == QUIT:                      
+                running = False;
 
-    #update display - think void draw from processing
-    pygame.display.update()
+            # keyboard input for paddle
+            if event.type == KEYDOWN:
+                if event.key == K_UP:
+                    player_paddle.direction = -1
+                elif event.key == K_DOWN:
+                    player_paddle.direction = 1
+            # when no button is pressed , paddle stops moving
+            if event.type == KEYUP:
+                if event.key == K_UP and player_paddle.direction == -1:
+                    player_paddle.direction = 0
+                elif event.key == K_DOWN and player_paddle.direction == 1:
+                    player_paddle.direction = 0
+
+              
+#####object updating phase
+        
+        player_paddle.update()
+        player2_paddle.update()
+        ball.update(player_paddle)
+        
+
+        if ball.hit_edge_left:
+            print ('Player 2 wins!')
+            running = False
+        elif ball.hit_edge_right:
+            print ('Player 1 wins!')
+            running = False
+
+#####rendering phase
+
+        #Black screen for background
+        screen.fill((100,100,100))   
+        
+        player_paddle.render(screen)
+        player2_paddle.render(screen)
+        ball.render(screen)
+        #pygame uses 2 screens , so i think it renders 1 frame ahead ( not entirely sure )
+        pygame.display.flip() 
+        #update display - think void draw from processing
+        pygame.display.update()
+    pygame.quit()
+main()
