@@ -76,15 +76,15 @@ def main():
 
                     # keyboard input for paddle
             if event.type == KEYDOWN:
-                if event.key == K_UP:
+                if event.key == K_w:
                     player2_paddle.direction = -1
-                elif event.key == K_DOWN:
+                elif event.key == K_s:
                     player2_paddle.direction = 1
             # when no button is pressed , paddle stops moving
             if event.type == KEYUP:
-                if event.key == K_UP and player2_paddle.direction == -1:
+                if event.key == K_w and player2_paddle.direction == -1:
                     player2_paddle.direction = 0
-                elif event.key == K_DOWN and player2_paddle.direction == 1:
+                elif event.key == K_s and player2_paddle.direction == 1:
                     player2_paddle.direction = 0
 
               
