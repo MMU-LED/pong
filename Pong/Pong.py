@@ -30,6 +30,7 @@ def main():
     height = 600*scale
     width = 300*scale 
     screensize = (height, width)
+    twoPlayer = False
 
     #create a new 'screen'/drawing surface - 300x300 resolution 
     #in pygame you have to create a 'surface' and then draw stuff on that surface similar to processing
@@ -74,13 +75,15 @@ def main():
                 elif event.key == K_DOWN and player_paddle.direction == 1:
                     player_paddle.direction = 0
 
-                    # keyboard input for paddle
+            # keyboard input for paddle 2
             if event.type == KEYDOWN:
                 if event.key == K_w:
+                    twoPlayer = True    # p2 takes control
                     player2_paddle.direction = -1
                 elif event.key == K_s:
+                    twoPlayer = True    # P2 takes control
                     player2_paddle.direction = 1
-            # when no button is pressed , paddle stops moving
+            # when no button is pressed , paddle 2 stops moving
             if event.type == KEYUP:
                 if event.key == K_w and player2_paddle.direction == -1:
                     player2_paddle.direction = 0
@@ -93,7 +96,10 @@ def main():
         player_paddle.update()
         player2_paddle.update()
         ball.update(player_paddle, player2_paddle)
-        
+
+        # very basic singleplayer - p2 moves on own until input takes over
+        if twoPlayer == False:
+            player2_paddle.centery = ball.centery
 
         if ball.hit_edge_left:
             print ('Player 2 wins!')
