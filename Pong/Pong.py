@@ -42,6 +42,7 @@ def main():
     
     ball = Ball(screensize)
     player_paddle = Paddle(screensize, screensize[0]-15)
+    player_paddle.color = 255,100,100 # red player
     player2_paddle = Paddle(screensize, 15)
 
     # Window Title
@@ -79,9 +80,11 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_w:
                     twoPlayer = True    # p2 takes control
+                    player2_paddle.color = 100,100,255 # paddle turns blue
                     player2_paddle.direction = -1
                 elif event.key == K_s:
                     twoPlayer = True    # P2 takes control
+                    player2_paddle.color = 100,100,255 # paddle turns blue
                     player2_paddle.direction = 1
             # when no button is pressed , paddle 2 stops moving
             if event.type == KEYUP:

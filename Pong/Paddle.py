@@ -17,8 +17,8 @@ class Paddle(object):
         paddle.rect = pygame.Rect(0, paddle.centery-int(paddle.height*0.5),
                                  paddle.width, paddle.height)
 
-        #red paddle to match our controller design
-        paddle.color = (255,100,100)
+        # paddle white by default
+        paddle.color = (200,200,200)
         paddle.speed = 3
         # if no input , paddle does not move
         paddle.direction = 0
@@ -40,3 +40,5 @@ class Paddle(object):
         pygame.draw.rect(screen, paddle.color, paddle.rect, 0)
         # black outline around paddle , probs wont need this when displayed on LED screen
         pygame.draw.rect(screen, (0,0,0), paddle.rect, 1)
+    
+    
