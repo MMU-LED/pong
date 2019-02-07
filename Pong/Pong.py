@@ -21,7 +21,6 @@ import pygame, sys
 from pygame.locals import *
 #useful imports - not fully sure what they're for though
 
-scale = 6
 
 def main():
     pygame.init() 
@@ -40,7 +39,7 @@ def main():
     #limit and track FPS
     clock = pygame.time.Clock()
     
-    ball = Ball(screensize)
+    ball = Ball(screensize, scale)
     player_paddle = Paddle(screensize, screensize[0]-15)
     player_paddle.color = 255,100,100 # red player
     player2_paddle = Paddle(screensize, 15)

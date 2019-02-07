@@ -2,8 +2,8 @@ import pygame
 
 #pygame.org.docs
 class Ball(object):
-    def __init__(ball, screensize):
-
+    def __init__(ball, screensize,scale):
+        ball.scale = scale
         ball.screensize = screensize
         #pygame does not work with decimal apparently so needs to be INT
         ball.centerx = int(screensize[0]*0.5)                    
@@ -20,7 +20,7 @@ class Ball(object):
         # x / y movement the same currently at 1 - 1
         ball.direction = [1,1]
         # speed of ball
-        ball.speed = 2.00
+        ball.speed = 2.0
      
         ball.hit_edge_left = False
         ball.hit_edge_right = False
