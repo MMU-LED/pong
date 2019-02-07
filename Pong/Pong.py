@@ -21,14 +21,14 @@ import pygame, sys
 from pygame.locals import *
 #useful imports - not fully sure what they're for though
 
-
+scale = 6
 
 def main():
     pygame.init() 
     #display
-    scale = 1
-    height = 600*scale
-    width = 300*scale 
+    scale = 6
+    height = 80*scale
+    width = 96*scale 
     screensize = (height, width)
     twoPlayer = False
 

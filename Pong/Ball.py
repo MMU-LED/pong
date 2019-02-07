@@ -20,7 +20,7 @@ class Ball(object):
         # x / y movement the same currently at 1 - 1
         ball.direction = [1,1]
         # speed of ball
-        ball.speed = 2
+        ball.speed = 2.00
      
         ball.hit_edge_left = False
         ball.hit_edge_right = False
@@ -34,10 +34,10 @@ class Ball(object):
         ball.rect.center = (ball.centerx, ball.centery)          
 
         #if ball hits top of screen, bounce down
-        if ball.rect.top <= 0:                                   
+        if ball.rect.top <= 10:                                   
             ball.direction[1] = 1
         #if ball hits bottom of screen, bounce up
-        elif ball.rect.bottom >= ball.screensize[1]-1:           
+        elif ball.rect.bottom >= ball.screensize[1]-11:           
             ball.direction[1] = -1
 
         #If ball hits right of screen , p1( left ) wins
@@ -49,10 +49,11 @@ class Ball(object):
 
         if ball.rect.colliderect(player_paddle.rect):
             ball.direction[0] = -1
+            ball.speed += 0.4
         
         if ball.rect.colliderect(player2_paddle.rect):
             ball.direction[0] = 1
-
+            ball.speed += 0.4
     def render(ball, screen):
         pygame.draw.circle(screen, ball.color, ball.rect.center, ball.raduis, 0)
         # black outline around ball , probs wont need this when displayed on LED screen
