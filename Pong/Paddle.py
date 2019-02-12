@@ -1,4 +1,6 @@
 import pygame
+import grove
+
 
 class Paddle(object):
     def __init__(paddle, screensize, xPos):
@@ -41,4 +43,5 @@ class Paddle(object):
         # black outline around paddle , probs wont need this when displayed on LED screen
         pygame.draw.rect(screen, (0,0,0), paddle.rect, 1)
     
-    
+
+
