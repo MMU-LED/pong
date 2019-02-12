@@ -25,7 +25,7 @@ from pygame.locals import *
 def main():
     pygame.init() 
     #display
-    scale = 6 #1 for led screen, 6-ish for testing
+    scale = 6#1 for led screen, 6-ish for testing
     height = 80*scale
     width = 96*scale 
     player1_points = 0
@@ -42,9 +42,9 @@ def main():
     clock = pygame.time.Clock()
     
     ball = Ball(screensize, scale)
-    player_paddle = Paddle(screensize, screensize[0]-15, scale)
+    player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
     player_paddle.color = 255,100,100 # red player
-    player2_paddle = Paddle(screensize, 15, scale)
+    player2_paddle = Paddle(screensize, 2*scale, scale)
 
     # Window Title
     pygame.display.set_caption('MMUARCADE2018')
