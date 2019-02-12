@@ -10,16 +10,19 @@ class Ball(object):
         ball.centerx = int(screensize[0]*0.5)                    
         ball.centery = int(screensize[1]*0.5)
         #size of ball
-        ball.raduis = 5
+        ball.raduis = scale
 
         #collision detection around ball                                                         
         ball.rect = pygame.Rect(ball.centerx-ball.raduis,        #top left
                                 ball.centery-ball.raduis,        #starting point
-                                ball.raduis*2, ball.raduis*2)    #size
+                                ball.raduis, ball.raduis)    #size
         # green ball 
         ball.color = (100,255,100)   
         # x / y movement the same currently at 1 - 1
-        ball.direction = [-1,random.randrange(-100, 100)/100]
+        if (random.randint(1, 2) ==1):
+           ball.direction = [-1,random.randint(50, 100)/100]
+        else:
+            ball.direction = [-1,random.randint(-100, -50)/100]
         # speed of ball
         ball.speed = 0.33*scale
      
@@ -36,10 +39,10 @@ class Ball(object):
 
         #if ball hits top of screen, bounce down
         if ball.rect.top <= 10:                                   
-            ball.direction[1] = 1
+            ball.direction[1] = ball.direction[1]*-1
         #if ball hits bottom of screen, bounce up
         elif ball.rect.bottom >= ball.screensize[1]-11:           
-            ball.direction[1] = -1
+            ball.direction[1] = ball.direction[1]*-1
 
         #If ball hits right of screen , p1( left ) wins
         if ball.rect.right >= ball.screensize[0]-1:
