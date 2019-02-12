@@ -27,6 +27,9 @@
     <Compile Include="GenericObject.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RotaryEncoder.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Paddle.py">
       <SubType>Code</SubType>
     </Compile>
