@@ -15,7 +15,7 @@ class Paddle(object):
         #paddle attributes        
         paddle.height = scale*20;
         if scale < 5:
-            paddle.width = scale*3;
+            paddle.width = scale*6;
         else:
             paddle.width = scale*2; #ensures that the paddles dont get too thick when you make the screen bigger.
 

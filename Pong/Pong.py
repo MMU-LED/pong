@@ -35,7 +35,7 @@ def main():
     twoPlayer = False
     myFont = pygame.font.SysFont("monospace", 10*scale)
 
-    label = myFont.render("0 : 0" ,True, (100,100,100))
+  
     #create a new 'screen'/drawing surface - 300x300 resolution 
     #in pygame you have to create a 'surface' and then draw stuff on that surface similar to processing
     #you can have multiple surfaces on screen at once I think - think different menus in a game
@@ -154,8 +154,8 @@ def main():
 
        
         #render text
-       
-        screen.blit(label, (100, 80))
+        label = myFont.render(str(player2_points) ,True, (100,100,100))
+        screen.blit(label, (320, 50))
         player_paddle.render(screen, scale)
         player2_paddle.render(screen, scale)
         ball.render(screen, scale)

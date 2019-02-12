@@ -10,7 +10,7 @@ class Ball(object):
         ball.centerx = int(screensize[0]*0.5)                    
         ball.centery = int(screensize[1]*0.5)
         #size of ball
-        ball.raduis = scale
+        ball.raduis = scale*3
 
         #collision detection around ball                                                         
         ball.rect = pygame.Rect(ball.centerx-ball.raduis,        #top left
