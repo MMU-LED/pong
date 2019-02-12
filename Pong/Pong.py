@@ -24,6 +24,7 @@ from pygame.locals import *
 
 def main():
     pygame.init() 
+    pygame.font.init()
     #display
     scale = 6#1 for led screen, 6-ish for testing
     height = 80*scale
@@ -32,7 +33,9 @@ def main():
     player2_points = 0
     screensize = (height, width)
     twoPlayer = False
+    myFont = pygame.font.SysFont("monospace", 10*scale)
 
+    label = myFont.render("0 : 0" ,True, (100,100,100))
     #create a new 'screen'/drawing surface - 300x300 resolution 
     #in pygame you have to create a 'surface' and then draw stuff on that surface similar to processing
     #you can have multiple surfaces on screen at once I think - think different menus in a game
@@ -130,7 +133,11 @@ def main():
 
         #Black screen for background
         screen.fill((0,0,0))   
-        
+
+       
+        #render text
+       
+        screen.blit(label, (100, 80))
         player_paddle.render(screen, scale)
         player2_paddle.render(screen, scale)
         ball.render(screen, scale)
