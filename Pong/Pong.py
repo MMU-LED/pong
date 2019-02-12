@@ -25,7 +25,7 @@ from pygame.locals import *
 def main():
     pygame.init() 
     #display
-    scale = 6
+    scale = 6 #1 for led screen, 6-ish for testing
     height = 80*scale
     width = 96*scale 
     screensize = (height, width)
@@ -40,9 +40,9 @@ def main():
     clock = pygame.time.Clock()
     
     ball = Ball(screensize, scale)
-    player_paddle = Paddle(screensize, screensize[0]-15)
+    player_paddle = Paddle(screensize, screensize[0]-15, scale)
     player_paddle.color = 255,100,100 # red player
-    player2_paddle = Paddle(screensize, 15)
+    player2_paddle = Paddle(screensize, 15, scale)
 
     # Window Title
     pygame.display.set_caption('MMUARCADE2018')
@@ -97,7 +97,7 @@ def main():
         
         player_paddle.update()
         player2_paddle.update()
-        ball.update(player_paddle, player2_paddle)
+        ball.update(player_paddle, player2_paddle, scale)
 
         # very basic singleplayer - p2 moves on own until input takes over
         if twoPlayer == False:
@@ -115,9 +115,9 @@ def main():
         #Black screen for background
         screen.fill((0,0,0))   
         
-        player_paddle.render(screen)
-        player2_paddle.render(screen)
-        ball.render(screen)
+        player_paddle.render(screen, scale)
+        player2_paddle.render(screen, scale)
+        ball.render(screen, scale)
         #pygame uses 2 screens , so i think it renders 1 frame ahead ( not entirely sure )
         pygame.display.flip() 
         #update display - think void draw from processing

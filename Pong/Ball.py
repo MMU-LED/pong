@@ -25,7 +25,7 @@ class Ball(object):
         ball.hit_edge_left = False
         ball.hit_edge_right = False
 
-    def update(ball, player_paddle, player2_paddle):
+    def update(ball, player_paddle, player2_paddle, scale):
 
         #movement for ball x + y
         ball.centerx += ball.direction[0] * ball.speed
@@ -49,15 +49,18 @@ class Ball(object):
 
         if ball.rect.colliderect(player_paddle.rect):
             ball.direction[0] = -1
-            ball.speed += 0.4
+            #ball.speed += 0.4
+            ball.speed += (scale*0.1)
         
         if ball.rect.colliderect(player2_paddle.rect):
             ball.direction[0] = 1
-            ball.speed += 0.4
-    def render(ball, screen):
-        pygame.draw.circle(screen, ball.color, ball.rect.center, ball.raduis, 0)
-        # black outline around ball , probs wont need this when displayed on LED screen
-        pygame.draw.circle(screen, (0,0,0), ball.rect.center, ball.raduis, 1)
+            #ball.speed += 0.4
+            ball.speed += (scale*0.1)
+            
+    def render(ball, screen, scale):
+        pygame.draw.circle(screen, ball.color, ball.rect.center, scale, 0)
+        # black outline around ball , probs wont need this when displayed on LED screen - commented it out just in case we still need it
+        # pygame.draw.circle(screen, (0,0,0), ball.rect.center, ball.raduis, 1)
 
 
         
