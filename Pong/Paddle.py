@@ -15,7 +15,7 @@ class Paddle(object):
         if scale < 5:
             paddle.width = scale*3;
         else:
-            paddle.width = scale*2;
+            paddle.width = scale*2; #ensures that the paddles dont get too thick when you make the screen bigger.
 
         paddle.rect = pygame.Rect(0, paddle.centery-int(paddle.height*0.5),
                                  paddle.width, paddle.height)

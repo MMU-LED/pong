@@ -1,9 +1,10 @@
 import pygame
-
+import random
+import decimal
 #pygame.org.docs
 class Ball(object):
     def __init__(ball, screensize,scale):
-        ball.scale = scale
+        ball.scale = scale 
         ball.screensize = screensize
         #pygame does not work with decimal apparently so needs to be INT
         ball.centerx = int(screensize[0]*0.5)                    
@@ -18,9 +19,9 @@ class Ball(object):
         # green ball 
         ball.color = (100,255,100)   
         # x / y movement the same currently at 1 - 1
-        ball.direction = [1,1]
+        ball.direction = [-1,random.randrange(-100, 100)/100]
         # speed of ball
-        ball.speed = 2.0
+        ball.speed = 0.33*scale
      
         ball.hit_edge_left = False
         ball.hit_edge_right = False
@@ -55,7 +56,7 @@ class Ball(object):
         if ball.rect.colliderect(player2_paddle.rect):
             ball.direction[0] = 1
             #ball.speed += 0.4
-            ball.speed += (scale*0.1)
+            ball.speed += (scale*0.03)
             
     def render(ball, screen, scale):
         pygame.draw.circle(screen, ball.color, ball.rect.center, scale, 0)
