@@ -28,6 +28,8 @@ def main():
     scale = 6 #1 for led screen, 6-ish for testing
     height = 80*scale
     width = 96*scale 
+    player1_points = 0
+    player2_points = 0
     screensize = (height, width)
     twoPlayer = False
 
@@ -75,7 +77,8 @@ def main():
                 elif event.key == K_DOWN and player_paddle.direction == 1:
                     player_paddle.direction = 0
 
-            # keyboard input for paddle 2
+            # keyboard input for paddle 2 
+            #SACRIFICIAL FEATURE - how does twoPlayer true become false again without the game ending?
             if event.type == KEYDOWN:
                 if event.key == K_w:
                     twoPlayer = True    # p2 takes control
@@ -100,14 +103,27 @@ def main():
         ball.update(player_paddle, player2_paddle, scale)
 
         # very basic singleplayer - p2 moves on own until input takes over
-        if twoPlayer == False:
-            player2_paddle.centery = ball.centery
+        if twoPlayer == False: #ai below here
+            if  ball.centery > player2_paddle.centery:
+                player2_paddle.centery += int (1*scale)/2
+            if  ball.centery < player2_paddle.centery:
+                player2_paddle.centery -= int (1*scale)/2
+           
+
 
         if ball.hit_edge_left:
-            print ('Player 2 wins!')
+            print ('One point for Player 1!')
+            player1_points += 1
+            print (player1_points)
+            if player1_points == 2:
+                print ('Player 1 wins!')
             running = False
         elif ball.hit_edge_right:
-            print ('Player 1 wins!')
+            print ('One point for Player 2!')
+            player2_points += 1
+            print (player2_points)
+            if player2_points == 2:
+                print ('Player 2 wins')
             running = False
 
 #####rendering phase
