@@ -1,5 +1,5 @@
 import pygame
-import grove
+#import grove
 
 
 class Paddle(object):
