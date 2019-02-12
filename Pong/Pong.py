@@ -115,16 +115,24 @@ def main():
             print ('One point for Player 1!')
             player1_points += 1
             print (player1_points)
+            ball = None
+            ball = Ball(screensize, scale)
             if player1_points == 2:
                 print ('Player 1 wins!')
-            running = False
+                player1_points = 0
+                player2_points = 0
+            #running = False
         elif ball.hit_edge_right:
             print ('One point for Player 2!')
             player2_points += 1
             print (player2_points)
+            ball = None
+            ball = Ball(screensize, scale)
             if player2_points == 2:
                 print ('Player 2 wins')
-            running = False
+                player1_points = 0
+                player2_points = 0
+            #running = False
 
 #####rendering phase
 
