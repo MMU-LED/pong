@@ -116,7 +116,12 @@ def main():
             player1_points += 1
             print (player1_points)
             ball = None
+            player_paddle = None
+            player2_paddle = None
             ball = Ball(screensize, scale)
+            player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
+            player_paddle.color = 255,100,100 # red player
+            player2_paddle = Paddle(screensize, 2*scale, scale)
             if player1_points == 2:
                 print ('Player 1 wins!')
                 player1_points = 0
@@ -127,7 +132,12 @@ def main():
             player2_points += 1
             print (player2_points)
             ball = None
+            player_paddle = None
+            player2_paddle = None
             ball = Ball(screensize, scale)
+            player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
+            player_paddle.color = 255,100,100 # red player
+            player2_paddle = Paddle(screensize, 2*scale, scale)
             if player2_points == 2:
                 print ('Player 2 wins')
                 player1_points = 0
