@@ -32,7 +32,8 @@ def main():
     player1_points = 0
     player2_points = 0
     screensize = (height, width)
-    twoPlayer = False
+    p1Control = False   #represents wether paddle is controlled by a player
+    p2Control = False
     myFont = pygame.font.SysFont("monospace", 10*scale)
 
   
@@ -46,7 +47,7 @@ def main():
     
     ball = Ball(screensize, scale)
     player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-    player_paddle.color = 255,100,100 # red player
+    #player_paddle.color = 255,100,100 # red player             TO BE REMOVED
     player2_paddle = Paddle(screensize, 2*scale, scale)
 
     # Window Title
@@ -70,8 +71,12 @@ def main():
             # keyboard input for paddle
             if event.type == KEYDOWN:
                 if event.key == K_UP:
+                    p1Control = True    # p1 takes control
+                    player_paddle.color = 255,100,100 # paddle turns red
                     player_paddle.direction = -1
                 elif event.key == K_DOWN:
+                    p1Control = True    # p1 takes control
+                    player_paddle.color = 255,100,100 # paddle turns red
                     player_paddle.direction = 1
             # when no button is pressed , paddle stops moving
             if event.type == KEYUP:
@@ -81,14 +86,14 @@ def main():
                     player_paddle.direction = 0
 
             # keyboard input for paddle 2 
-            #SACRIFICIAL FEATURE - how does twoPlayer true become false again without the game ending?
+            #SACRIFICIAL FEATURE - A way for paddles switch to AI without game ending?
             if event.type == KEYDOWN:
                 if event.key == K_w:
-                    twoPlayer = True    # p2 takes control
+                    p2Control = True    # p2 takes control
                     player2_paddle.color = 100,100,255 # paddle turns blue
                     player2_paddle.direction = -1
                 elif event.key == K_s:
-                    twoPlayer = True    # P2 takes control
+                    p2Control = True    # P2 takes control
                     player2_paddle.color = 100,100,255 # paddle turns blue
                     player2_paddle.direction = 1
             # when no button is pressed , paddle 2 stops moving
@@ -106,12 +111,17 @@ def main():
         ball.update(player_paddle, player2_paddle, scale)
 
         # very basic singleplayer - p2 moves on own until input takes over
-        if twoPlayer == False: #ai below here
+        if p2Control == False: #ai below here
             if  ball.centery > player2_paddle.centery:
                 player2_paddle.centery += int (1*scale)/2
             if  ball.centery < player2_paddle.centery:
                 player2_paddle.centery -= int (1*scale)/2
-           
+        
+        if p1Control == False: #ai below here
+            if  ball.centery > player_paddle.centery:
+                player_paddle.centery += int (1*scale)/2
+            if  ball.centery < player_paddle.centery:
+                player_paddle.centery -= int (1*scale)/2
 
 
         if ball.hit_edge_left:
@@ -123,8 +133,11 @@ def main():
             player2_paddle = None
             ball = Ball(screensize, scale)
             player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-            player_paddle.color = 255,100,100 # red player
             player2_paddle = Paddle(screensize, 2*scale, scale)
+            if p1Control == True:
+                player_paddle.color = 255,100,100 # red player
+            if p2Control == True:
+                player2_paddle.color = 100,100,255 # blue player
             if player1_points == 2:
                 print ('Player 1 wins!')
                 player1_points = 0
@@ -139,8 +152,11 @@ def main():
             player2_paddle = None
             ball = Ball(screensize, scale)
             player_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-            player_paddle.color = 255,100,100 # red player
             player2_paddle = Paddle(screensize, 2*scale, scale)
+            if p1Control == True:
+                player_paddle.color = 255,100,100 # red player
+            if p2Control == True:
+                player2_paddle.color = 100,100,255 # blue player
             if player2_points == 2:
                 print ('Player 2 wins')
                 player1_points = 0
