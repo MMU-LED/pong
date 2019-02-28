@@ -53,7 +53,7 @@ def main():
 
     #this is like void draw 
     #loop below forever
-    
+
     running = True 
     while running: 
         
@@ -125,10 +125,8 @@ def main():
 
         if ball.hit_edge_left:
             pointScored("left")
-            #running = False
         elif ball.hit_edge_right:
             pointScored("right")
-            #running = False
 
 #####rendering phase
 
@@ -170,42 +168,48 @@ def pointScored(side):
         print("One point for Player 1!")
         player1_points += 1
         print (player1_points)
-        ball = None
-        player1_paddle = None
-        player2_paddle = None
-        ball = Ball(screensize, scale)
-        player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-        player2_paddle = Paddle(screensize, 2*scale, scale)
-        if p1Control == True:
-            player1_paddle.color = 255,100,100 # red player
-        if p2Control == True:
-            player2_paddle.color = 100,100,255 # blue player
-        if player1_points == 2:
-            print ('Player 1 wins!')
-            player1_points = 0
-            player2_points = 0
+        
     elif side == "right":
         # ball has gone right
         print ('One point for Player 2!')
         player2_points += 1
         print (player2_points)
-        ball = None
-        player1_paddle = None
-        player2_paddle = None
-        ball = Ball(screensize, scale)
-        player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-        player2_paddle = Paddle(screensize, 2*scale, scale)
-        if p1Control == True:
-            player1_paddle.color = 255,100,100 # red player
-        if p2Control == True:
-            player2_paddle.color = 100,100,255 # blue player
-        if player2_points == 2:
-            print ('Player 2 wins')
-            player1_points = 0
-            player2_points = 0
+    
+    # reset ball
+    ball = Ball(screensize, scale)
+    # paddles no longer reset here - readd if necessary
+    
+    if p1Control == True:
+        player1_paddle.color = 255,100,100 # red player
+    if p2Control == True:
+        player2_paddle.color = 100,100,255 # blue player
+    
+    if player1_points == 2:
+        print ('Player 1 wins!')
+        resetGame()
+    if player2_points == 2:
+        print ('Player 2 wins')
+        resetGame()
 
 
 def resetGame():
-    print("Game Reset")
+    global player1_points
+    global player2_points
+    global screensize
+    global p1Control
+    global p2Control
+    global ball
+    global screen
+    global player1_paddle
+    global player2_paddle
+
+    wprint("Game Reset")
+    player1_points = 0
+    player2_points = 0
+    p1Control = False
+    p2Control = False
+    player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
+    player2_paddle = Paddle(screensize, 2*scale, scale)
+
     # Reset Stuff
 main()
