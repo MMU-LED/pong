@@ -6,7 +6,7 @@ import pygame, sys
 #import pygame & sys - sys lets us exit the game
 
 from pygame.locals import *
-#useful imports - not fully sure what they're for though
+#useful imports
 
 player1_points = 0
 player2_points = 0
@@ -18,7 +18,6 @@ player2_paddle = None
 ball = None
 screen = None
 
-
 # Read only
 scale = 8 # 1 for led screen, 6-ish for testing
 height = 80*scale
@@ -26,6 +25,9 @@ width = 96*scale
 scoreLimit = 2
 keyboardControl = True
 
+# Global Keyword needed if want to write to global variable (Not if only reading)
+
+# MAIN - START OF MAIN CODE
 def main():
     global player1_points
     global player2_points
@@ -37,7 +39,7 @@ def main():
     global player1_paddle
     global player2_paddle
     global scoreLimit
-
+    global myFont
 
     # Initialise PyGame and create screen object
     pygame.init() 
@@ -55,116 +57,113 @@ def main():
     player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
     player2_paddle = Paddle(screensize, 2*scale, scale)
 
-    #this is like void draw 
-    #loop below forever
-
     running = True 
-    while running: 
-        
-        #fps limiting/reporting phase
-        clock.tick(64) 
-        
-#####event handling phase
+    while running:  # MAIN LOOP
 
-        #get user events like keypresses
+        # FRAME SPEED LIMIT
+        clock.tick(64) 
+        # EVENT HANDLING
         for event in pygame.event.get():          
             if event.type == QUIT:                      
                 running = False;
             elif keyboardControl == True:
-                keyboardHandler(event)
-            
-
+                keyboardHandler(event)      # KEYBOARD CONTROLS
+        if keyboardControl == False:
+            groveControlsHandler()          # GROVE CONTROLS
               
-#####object updating phase
-        
+        # OBJECT UPDATING
         player1_paddle.update()
         player2_paddle.update()
         ball.update(player1_paddle, player2_paddle, scale)
 
-        # very basic singleplayer - p2 moves on own until input takes over
-        if p2Control == False: #ai below here
-            if  ball.centery > player2_paddle.centery:
-                player2_paddle.centery += int (1*scale)/2
-            if  ball.centery < player2_paddle.centery:
-                player2_paddle.centery -= int (1*scale)/2
-        
-        if p1Control == False: #ai below here
-            if  ball.centery > player1_paddle.centery:
-                player1_paddle.centery += int (1*scale)/2
-            if  ball.centery < player1_paddle.centery:
-                player1_paddle.centery -= int (1*scale)/2
+        # AI CONTROLS
+        if p2Control == False: 
+            paddleAI(player2_paddle)
+        if p1Control == False:
+            paddleAI(player1_paddle)
 
-
+        # POINT SCORING
         if ball.hit_edge_left:
             pointScored("left")
         elif ball.hit_edge_right:
             pointScored("right")
 
-#####rendering phase
+        # RENDER - SEE BELOW
+        render() 
+    pygame.quit()  # executes when "running" is set to False
 
-        #Black screen for background
-        screen.fill((0,0,0))   
 
-       
-        #render text
-        label = myFont.render(str(player2_points) ,True, (100,100,100))
-        screen.blit(label, (320, 50))
-        player1_paddle.render(screen, scale)
-        player2_paddle.render(screen, scale)
-        ball.render(screen, scale)
-        #pygame uses 2 screens , so i think it renders 1 frame ahead ( not entirely sure )
-        pygame.display.flip() 
-        #update display - think void draw from processing
-        pygame.display.update()
-    pygame.quit()
+# RENDER - CONTAINS USED TO DRAW OBJECTS TO THE SCREEN
+def render():
+    global screen 
+    screen.fill((0,0,0))   # Black screen for background
+    
+    # RENDER TEXT
+    label = myFont.render(str(player2_points) ,True, (100,100,100)) 
+    screen.blit(label, (320, 50))
+    player1_paddle.render(screen, scale)
+    player2_paddle.render(screen, scale)
+    ball.render(screen, scale)
+    pygame.display.flip()   # pygame uses 2 screens , so i think it renders 1 frame ahead ( not entirely sure )
+    pygame.display.update() # Update Display
 
+
+# AI - MOVE PADDLE TOWARDS BALL
+def paddleAI(AI_paddle):
+    global ball
+    if  ball.centery > AI_paddle.centery:
+        AI_paddle.centery += int (1*scale)/2
+    if  ball.centery < AI_paddle.centery:
+        AI_paddle.centery -= int (1*scale)/2
+
+
+# KEYBOARD - MOVE PADDLES WITH KEY CONTROLS
 def keyboardHandler(event):
     global p1Control
     global p2Control
     global player1_paddle
     global player2_paddle
     
-    # keyboard input for paddle
+    # KEY PRESSED EVENT
     if event.type == KEYDOWN:
         if event.key == K_UP:
-            p1Control = True    # p1 takes control
-            player1_paddle.color = 255,100,100 # paddle turns red
+            p1Control = True
+            player1_paddle.color = 255,100,100
             player1_paddle.direction = -1
-
         elif event.key == K_DOWN:
-            p1Control = True    # p1 takes control
-            player1_paddle.color = 255,100,100 # paddle turns red
+            p1Control = True
+            player1_paddle.color = 255,100,100 
             player1_paddle.direction = 1
 
         if event.key == K_w:
-            p2Control = True    # p2 takes control
-            player2_paddle.color = 100,100,255 # paddle turns blue
+            p2Control = True    
+            player2_paddle.color = 100,100,255 
             player2_paddle.direction = -1
-
         elif event.key == K_s:
-            p2Control = True    # P2 takes control
-            player2_paddle.color = 100,100,255 # paddle turns blue
+            p2Control = True
+            player2_paddle.color = 100,100,255
             player2_paddle.direction = 1
 
-
+    # KEY RELEASED EVENT
     if event.type == KEYUP:
         if event.key == K_UP and player1_paddle.direction == -1:
             player1_paddle.direction = 0
-
         elif event.key == K_DOWN and player1_paddle.direction == 1:
             player1_paddle.direction = 0
 
         if event.key == K_w and player2_paddle.direction == -1:
             player2_paddle.direction = 0
-
         elif event.key == K_s and player2_paddle.direction == 1:
             player2_paddle.direction = 0
 
 
-
-def paddleHandler():
+# GROVE CONTROLS - GET VALUE FROM ROTARY SENSORS AND CONVERT TO PADDLE CO-OORD
+# NOT YET IMPLEMENTED
+def groveControlsHandler():
     print("Placeholder")
 
+
+# POINT SCORED - TRACK SCORE AND CHECK IF GAME IS OVER YET
 def pointScored(side):
     global player1_points
     global player2_points
@@ -192,11 +191,6 @@ def pointScored(side):
     # reset ball
     ball = Ball(screensize, scale)
     
-    if p1Control == True:
-        player1_paddle.color = 255,100,100 # red player
-    if p2Control == True:
-        player2_paddle.color = 100,100,255 # blue player
-    
     if player1_points == scoreLimit:
         print ('Player 1 wins!')
         resetGame()
@@ -205,6 +199,7 @@ def pointScored(side):
         resetGame()
 
 
+# RESET - RETURN GAME TO DEFAULT STATE AFTER GAME HAS ENDED
 def resetGame():
     global player1_points
     global player2_points
@@ -224,5 +219,5 @@ def resetGame():
     player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
     player2_paddle = Paddle(screensize, 2*scale, scale)
 
-    # Reset Stuff
+# RUN THE GAME
 main()
