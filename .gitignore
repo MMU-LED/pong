@@ -114,3 +114,4 @@ venv.bak/
 !.vscode/launch.json
 !.vscode/extensions.json
 
+Pong/.vscode/settings.json

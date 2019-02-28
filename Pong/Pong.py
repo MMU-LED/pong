@@ -18,11 +18,13 @@ player2_paddle = None
 ball = None
 screen = None
 
+
 # Read only
-scale = 6 # 1 for led screen, 6-ish for testing
+scale = 8 # 1 for led screen, 6-ish for testing
 height = 80*scale
 width = 96*scale 
 scoreLimit = 2
+keyboardControl = True
 
 def main():
     global player1_points
@@ -68,41 +70,9 @@ def main():
         for event in pygame.event.get():          
             if event.type == QUIT:                      
                 running = False;
-
-            # keyboard input for paddle
-            if event.type == KEYDOWN:
-                if event.key == K_UP:
-                    p1Control = True    # p1 takes control
-                    player1_paddle.color = 255,100,100 # paddle turns red
-                    player1_paddle.direction = -1
-                elif event.key == K_DOWN:
-                    p1Control = True    # p1 takes control
-                    player1_paddle.color = 255,100,100 # paddle turns red
-                    player1_paddle.direction = 1
-            # when no button is pressed , paddle stops moving
-            if event.type == KEYUP:
-                if event.key == K_UP and player1_paddle.direction == -1:
-                    player1_paddle.direction = 0
-                elif event.key == K_DOWN and player1_paddle.direction == 1:
-                    player1_paddle.direction = 0
-
-            # keyboard input for paddle 2 
-            #SACRIFICIAL FEATURE - A way for paddles switch to AI without game ending?
-            if event.type == KEYDOWN:
-                if event.key == K_w:
-                    p2Control = True    # p2 takes control
-                    player2_paddle.color = 100,100,255 # paddle turns blue
-                    player2_paddle.direction = -1
-                elif event.key == K_s:
-                    p2Control = True    # P2 takes control
-                    player2_paddle.color = 100,100,255 # paddle turns blue
-                    player2_paddle.direction = 1
-            # when no button is pressed , paddle 2 stops moving
-            if event.type == KEYUP:
-                if event.key == K_w and player2_paddle.direction == -1:
-                    player2_paddle.direction = 0
-                elif event.key == K_s and player2_paddle.direction == 1:
-                    player2_paddle.direction = 0
+            elif keyboardControl == True:
+                keyboardHandler(event)
+            
 
               
 #####object updating phase
@@ -148,8 +118,49 @@ def main():
         pygame.display.update()
     pygame.quit()
 
-def keyboardHandler():
-    print("Placeholder")
+def keyboardHandler(event):
+    global p1Control
+    global p2Control
+    global player1_paddle
+    global player2_paddle
+    
+    # keyboard input for paddle
+    if event.type == KEYDOWN:
+        if event.key == K_UP:
+            p1Control = True    # p1 takes control
+            player1_paddle.color = 255,100,100 # paddle turns red
+            player1_paddle.direction = -1
+
+        elif event.key == K_DOWN:
+            p1Control = True    # p1 takes control
+            player1_paddle.color = 255,100,100 # paddle turns red
+            player1_paddle.direction = 1
+
+        if event.key == K_w:
+            p2Control = True    # p2 takes control
+            player2_paddle.color = 100,100,255 # paddle turns blue
+            player2_paddle.direction = -1
+
+        elif event.key == K_s:
+            p2Control = True    # P2 takes control
+            player2_paddle.color = 100,100,255 # paddle turns blue
+            player2_paddle.direction = 1
+
+
+    if event.type == KEYUP:
+        if event.key == K_UP and player1_paddle.direction == -1:
+            player1_paddle.direction = 0
+
+        elif event.key == K_DOWN and player1_paddle.direction == 1:
+            player1_paddle.direction = 0
+
+        if event.key == K_w and player2_paddle.direction == -1:
+            player2_paddle.direction = 0
+
+        elif event.key == K_s and player2_paddle.direction == 1:
+            player2_paddle.direction = 0
+
+
 
 def paddleHandler():
     print("Placeholder")
@@ -180,7 +191,6 @@ def pointScored(side):
     
     # reset ball
     ball = Ball(screensize, scale)
-    # paddles no longer reset here - readd if necessary
     
     if p1Control == True:
         player1_paddle.color = 255,100,100 # red player
