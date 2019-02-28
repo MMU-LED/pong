@@ -22,6 +22,7 @@ screen = None
 scale = 6 # 1 for led screen, 6-ish for testing
 height = 80*scale
 width = 96*scale 
+scoreLimit = 2
 
 def main():
     global player1_points
@@ -33,6 +34,7 @@ def main():
     global screen
     global player1_paddle
     global player2_paddle
+    global scoreLimit
 
 
     # Initialise PyGame and create screen object
@@ -162,6 +164,7 @@ def pointScored(side):
     global screen
     global player1_paddle
     global player2_paddle
+    global scoreLimit
 
     if side == "left":
         # ball has gone left
@@ -184,10 +187,10 @@ def pointScored(side):
     if p2Control == True:
         player2_paddle.color = 100,100,255 # blue player
     
-    if player1_points == 2:
+    if player1_points == scoreLimit:
         print ('Player 1 wins!')
         resetGame()
-    if player2_points == 2:
+    if player2_points == scoreLimit:
         print ('Player 2 wins')
         resetGame()
 
@@ -203,7 +206,7 @@ def resetGame():
     global player1_paddle
     global player2_paddle
 
-    wprint("Game Reset")
+    print("Game Reset")
     player1_points = 0
     player2_points = 0
     p1Control = False
