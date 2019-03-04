@@ -1,12 +1,30 @@
-from Ball import Ball
-
-from Paddle import Paddle
-
-import pygame, sys 
+import pygame, sys, time
+import config
 #import pygame & sys - sys lets us exit the game
-
+from Ball import Ball
+from Paddle import Paddle
 from pygame.locals import *
-#useful imports
+
+
+
+try:
+    import grovepi # try to import grovepi and setup grove if found
+    print("On the pi and have access to grove libraries!")
+    keyboardControl = False;
+    grovepi.pinMode(config.groveP1, "INPUT")
+    grovepi.pinMode(config.groveP2, "INPUT")
+    grovepi.pinMode(config.groveButton, "INPUT")
+    time.sleep(1)
+except ImportError: # there is no grove
+    print("Not on the pi, grove disabled!")
+    keyboardControl = True;
+
+
+# get config settings
+height = config.height
+width = config.width
+scale = config.scale
+scoreLimit = config.scoreLimit
 
 player1_points = 0
 player2_points = 0
@@ -18,12 +36,8 @@ player2_paddle = None
 ball = None
 screen = None
 
-# Read only
-scale = 8 # 1 for led screen, 6-ish for testing
-height = 80*scale
-width = 96*scale 
-scoreLimit = 2
-keyboardControl = True
+# config move to config
+
 
 # Global Keyword needed if want to write to global variable (Not if only reading)
 
@@ -156,11 +170,28 @@ def keyboardHandler(event):
         elif event.key == K_s and player2_paddle.direction == 1:
             player2_paddle.direction = 0
 
+def processRotaryInput(rotary_input):
+    if rotary_input <= 11.5:
+        paddle_coord = 0
+    elif rotary_input >= (1023-11.5):
+        paddle_coord = 1000
+    else:
+         paddle_coord = rotary_input
+    
+    return int(paddle_coord / 10)
 
 # GROVE CONTROLS - GET VALUE FROM ROTARY SENSORS AND CONVERT TO PADDLE CO-OORD
 # NOT YET IMPLEMENTED
 def groveControlsHandler():
-    print("Placeholder")
+    try:
+        p1_value = processRotaryInput(grovepi.analogRead(config.groveP1))
+        p2_value = processRotaryInput(grovepi.analogRead(config.groveP2))
+        butt_value = grovepi.digitalRead(config.groveButton)
+        print(str(p1_value) + " " + str(p2_value) + " " + str(butt_value))
+        # these values are 0 - 100. Need to be converted so that 0 is bottom of the screen and 100 is top
+        # maybe percentage of (screensize adjusted for centre of paddle)
+    except IOError:
+        print("Error Reading grove controls!")
 
 
 # POINT SCORED - TRACK SCORE AND CHECK IF GAME IS OVER YET

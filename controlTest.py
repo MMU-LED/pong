@@ -1,3 +1,5 @@
+# DEMO CONTROL CODE - FOR TESTING ONLY. ACTUAL CONTROLS WITHIN PONG.PY
+
 import time
 import grovepi
 
