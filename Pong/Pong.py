@@ -170,19 +170,22 @@ def keyboardHandler(event):
         elif event.key == K_s and player2_paddle.direction == 1:
             player2_paddle.direction = 0
 
-def processRotaryInput(rotary_input):
+def processRotaryInput(rotary_input):  # Clean Rotary input to 0 - 100
     if rotary_input <= 11.5:
         paddle_coord = 0
     elif rotary_input >= (1023-11.5):
         paddle_coord = 1000
     else:
          paddle_coord = rotary_input
-    
     return int(paddle_coord / 10)
+
+
 
 # GROVE CONTROLS - GET VALUE FROM ROTARY SENSORS AND CONVERT TO PADDLE CO-OORD
 # NOT YET IMPLEMENTED
 def groveControlsHandler():
+    global player1_paddle
+    global player2_paddle
     try:
         p1_value = processRotaryInput(grovepi.analogRead(config.groveP1))
         p2_value = processRotaryInput(grovepi.analogRead(config.groveP2))
@@ -190,6 +193,8 @@ def groveControlsHandler():
         print(str(p1_value) + " " + str(p2_value) + " " + str(butt_value))
         # these values are 0 - 100. Need to be converted so that 0 is bottom of the screen and 100 is top
         # maybe percentage of (screensize adjusted for centre of paddle)
+        player1_paddle.centery = (p1_value/100) * (screensize[1]) # may need adjusting
+        player2_paddle.centery = (p2_value/100) * (screensize[1])
     except IOError:
         print("Error Reading grove controls!")
 
