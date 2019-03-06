@@ -1,6 +1,6 @@
-scale = 8 # 1 for led screen, 6-ish for testing
-height = 80*scale
-width = 96*scale 
+scale = 1 # 1 for led screen, 6-ish for testing
+height = 96*scale
+width = 80*scale 
 scoreLimit = 2
 
 # Grove Socket Assignments

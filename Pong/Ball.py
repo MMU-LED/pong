@@ -10,7 +10,7 @@ class Ball(object):
         ball.centerx = int(screensize[0]*0.5)                    
         ball.centery = int(screensize[1]*0.5)
         #size of ball
-        ball.raduis = scale*3
+        ball.raduis = scale*6
 
         #collision detection around ball                                                         
         ball.rect = pygame.Rect(ball.centerx-ball.raduis,        #top left
@@ -62,7 +62,7 @@ class Ball(object):
             ball.speed += (scale*0.03)
             
     def render(ball, screen, scale):
-        pygame.draw.circle(screen, ball.color, ball.rect.center, scale, 0)
+        pygame.draw.circle(screen, ball.color, ball.rect.center, scale*2, 0)
         # black outline around ball , probs wont need this when displayed on LED screen - commented it out just in case we still need it
         # pygame.draw.circle(screen, (0,0,0), ball.rect.center, ball.raduis, 1)
 

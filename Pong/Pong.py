@@ -68,8 +68,8 @@ def main():
     
     # Create Ball and paddles
     ball = Ball(screensize, scale)
-    player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-    player2_paddle = Paddle(screensize, 2*scale, scale)
+    player1_paddle = Paddle(screensize, screensize[0]-(2*scale)-2, scale)
+    player2_paddle = Paddle(screensize, 2*scale+2, scale)
 
     running = True 
     while running:  # MAIN LOOP
@@ -252,8 +252,8 @@ def resetGame():
     player2_points = 0
     p1Control = False
     p2Control = False
-    player1_paddle = Paddle(screensize, screensize[0]-(2*scale), scale)
-    player2_paddle = Paddle(screensize, 2*scale, scale)
+    player1_paddle = Paddle(screensize, screensize[0]-(2*scale)-2, scale)
+    player2_paddle = Paddle(screensize, 2*scale+2, scale)
 
 # RUN THE GAME
 main()
