@@ -36,7 +36,9 @@ player2_paddle = None
 ball = None
 screen = None
 
-# config move to config
+# Tracking if grove controls have changed
+p1Grove_Initial = 0
+p2Grove_Initial = 0
 
 
 # Global Keyword needed if want to write to global variable (Not if only reading)
@@ -62,6 +64,9 @@ def main():
     myFont = pygame.font.SysFont("monospace", 10*scale)
     screen = pygame.display.set_mode((screensize))
     pygame.display.set_caption('MMUARCADE2018')
+
+    # set up grove input detection
+    groveInitalRead()
    
     # limit and track FPS
     clock = pygame.time.Clock()
@@ -170,6 +175,7 @@ def keyboardHandler(event):
         elif event.key == K_s and player2_paddle.direction == 1:
             player2_paddle.direction = 0
 
+
 def processRotaryInput(rotary_input):  # Clean Rotary input to 0 - 100
     if rotary_input <= 11.5:
         paddle_coord = 0
@@ -189,12 +195,21 @@ def groveControlsHandler():
     try:
         p1_value = processRotaryInput(grovepi.analogRead(config.groveP1))
         p2_value = processRotaryInput(grovepi.analogRead(config.groveP2))
+
+        # Detect input on grove controls
+        if (abs(p1_value) - p1Grove_Initial) > config.grove_Threshold:
+            p1Control == True
+        if (abs(p2_value) - p2Grove_Initial) > config.grove_Threshold:
+            p2Control == True
+
         butt_value = grovepi.digitalRead(config.groveButton)
         print(str(p1_value) + " " + str(p2_value) + " " + str(butt_value))
         # these values are 0 - 100. Need to be converted so that 0 is bottom of the screen and 100 is top
         # maybe percentage of (screensize adjusted for centre of paddle)
-        player1_paddle.centery = (p1_value/100) * (screensize[1]) # may need adjusting
-        player2_paddle.centery = (p2_value/100) * (screensize[1])
+        if p1Control == True:
+            player1_paddle.centery = (p1_value/100) * (screensize[1]) # may need adjusting
+        if p2Control == True:
+            player2_paddle.centery = (p2_value/100) * (screensize[1])
     except IOError:
         print("Error Reading grove controls!")
 
@@ -235,6 +250,15 @@ def pointScored(side):
         resetGame()
 
 
+def groveInitalRead():
+    global p1Grove_Initial
+    global p2Grove_Initial
+    if keyboardControl == False: ## set inital values
+        p1Grove_Initial = processRotaryInput(grovepi.analogRead(config.groveP1))
+        p2Grove_Initial = processRotaryInput(grovepi.analogRead(config.groveP2))
+
+
+
 # RESET - RETURN GAME TO DEFAULT STATE AFTER GAME HAS ENDED
 def resetGame():
     global player1_points
@@ -250,6 +274,8 @@ def resetGame():
     print("Game Reset")
     player1_points = 0
     player2_points = 0
+
+    groveInitalRead()
     p1Control = False
     p2Control = False
     player1_paddle = Paddle(screensize, screensize[0]-(2*scale)-2, scale)

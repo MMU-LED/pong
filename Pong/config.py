@@ -7,3 +7,6 @@ scoreLimit = 2
 groveP1 = 0
 groveP2 = 2
 groveButton = 4
+
+# Change required in grove controls before enabling player control
+grove_Threshold = 5
