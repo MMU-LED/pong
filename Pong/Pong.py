@@ -41,6 +41,8 @@ messageScroll = 0
 # Tracking if grove controls have changed
 p1Grove_Initial = 0
 p2Grove_Initial = 0
+p1Grove_timer = 0
+p2Grove_timer = 0
 
 pyglet.font.add_file('dotty.ttf')
 dotty = pyglet.font.load('Dotty')
@@ -204,31 +206,47 @@ def processRotaryInput(rotary_input):  # Clean Rotary input to 0 - 100
 
 
 # GROVE CONTROLS - GET VALUE FROM ROTARY SENSORS AND CONVERT TO PADDLE CO-OORD
-# NOT YET IMPLEMENTED
+
 def groveControlsHandler():
     global player1_paddle
     global player2_paddle
+    global p1Control
+    global p2Control
     try:
         p1_value = processRotaryInput(grovepi.analogRead(config.groveP1))
         p2_value = processRotaryInput(grovepi.analogRead(config.groveP2))
 
         # Detect input on grove controls
-        if (abs(p1_value) - p1Grove_Initial) > config.grove_Threshold:
-            p1Control == True
-        if (abs(p2_value) - p2Grove_Initial) > config.grove_Threshold:
-            p2Control == True
+        groveInputTest(p1_value, p2_value)
 
         butt_value = grovepi.digitalRead(config.groveButton)
-        print(str(p1_value) + " " + str(p2_value) + " " + str(butt_value))
+        # print("R1-"+str(p1_value) + " R2-" + str(p2_value) + " B1-" + str(butt_value) + " I1-" + str(p1Grove_Initial)+str(p1Control)+" I2-"+str(p2Grove_Initial)+str(p2Control))
         # these values are 0 - 100. Need to be converted so that 0 is bottom of the screen and 100 is top
         # maybe percentage of (screensize adjusted for centre of paddle)
         if p1Control == True:
-            player1_paddle.centery = (p1_value/100) * (screensize[1]) # may need adjusting
+            player1_paddle.centery = (p1_value/100) * (screensize[1])
         if p2Control == True:
             player2_paddle.centery = (p2_value/100) * (screensize[1])
     except IOError:
         print("Error Reading grove controls!")
 
+def groveInputTest(p1_value, p2_value):
+    global p1Grove_timer
+    global p2Grove_timer
+    global p1Control
+    global p2Control
+    if abs(p1_value - p1Grove_Initial) > config.grove_Threshold:
+        p1Grove_timer = p1Grove_timer +1
+    if abs(p2_value - p2Grove_Initial) > config.grove_Threshold:
+        p2Grove_timer = p2Grove_timer +1
+            
+    if p1Grove_timer>7:
+        p1Control = True
+        player1_paddle.color = 255,100,100
+    if p2Grove_timer>7:
+        p2Control = True
+        player2_paddle.color = 100,100,255
+    
 
 # POINT SCORED - TRACK SCORE AND CHECK IF GAME IS OVER YET
 def pointScored(side):
@@ -269,9 +287,14 @@ def pointScored(side):
 def groveInitalRead():
     global p1Grove_Initial
     global p2Grove_Initial
+    global p1Grove_timer
+    global p2Grove_timer
+    
     if keyboardControl == False: ## set inital values
         p1Grove_Initial = processRotaryInput(grovepi.analogRead(config.groveP1))
         p2Grove_Initial = processRotaryInput(grovepi.analogRead(config.groveP2))
+        p1Grove_timer = 0
+        p2Grove_timer = 0
 
 
 
