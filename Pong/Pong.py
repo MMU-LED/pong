@@ -123,14 +123,14 @@ def render():
     global screen
     global messageScroll
     screen.fill((0,0,0))   # Black screen for background
-    pygame.draw.line(screen,(100,100,100),(-15,12*scale),(100*scale,12*scale))
+    pygame.draw.line(screen,(config.colorGray),(-15,12*scale),(100*scale,12*scale))
     # RENDER TEXT
 
 
     #label = myFont.render(str(player2_points) ,True, (100,100,100))  
     #screen.blit(label, (320, 50))
     messageText = config.msg
-    Message = myFont.render(str(messageText) ,True, (200,200,200)) 
+    Message = myFont.render(str(messageText) ,True, (config.colorText)) 
     messageScroll += scale *0.1
     screen.blit(Message, ((80 * scale )-messageScroll, -1))
     if messageScroll > len(messageText * scale  * 8):
@@ -165,20 +165,20 @@ def keyboardHandler(event):
     if event.type == KEYDOWN:
         if event.key == K_UP:
             p1Control = True
-            player1_paddle.color = 255,100,100
+            player1_paddle.color = config.colorRed
             player1_paddle.direction = -1
         elif event.key == K_DOWN:
             p1Control = True
-            player1_paddle.color = 255,100,100 
+            player1_paddle.color = config.colorRed
             player1_paddle.direction = 1
 
         if event.key == K_w:
             p2Control = True    
-            player2_paddle.color = 100,100,255 
+            player2_paddle.color = config.colorBlue
             player2_paddle.direction = -1
         elif event.key == K_s:
             p2Control = True
-            player2_paddle.color = 100,100,255
+            player2_paddle.color = config.colorBlue
             player2_paddle.direction = 1
 
     # KEY RELEASED EVENT
@@ -242,10 +242,10 @@ def groveInputTest(p1_value, p2_value):
             
     if p1Grove_timer>7:
         p1Control = True
-        player1_paddle.color = 255,100,100
+        player1_paddle.color = config.colorRed
     if p2Grove_timer>7:
         p2Control = True
-        player2_paddle.color = 100,100,255
+        player2_paddle.color = config.colorBlue
     
 
 # POINT SCORED - TRACK SCORE AND CHECK IF GAME IS OVER YET

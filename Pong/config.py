@@ -12,3 +12,8 @@ groveButton = 4
 grove_Threshold = 10
 
 msg = "THIS IS A MESS"
+colorBlue = 100,100,255
+colorRed  = 255,100,100
+colorGreen = 100,255,100
+colorGray = 100,100,100
+colorText = 200,200,200
