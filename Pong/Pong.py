@@ -35,7 +35,7 @@ player1_paddle = None
 player2_paddle = None
 ball = None
 screen = None
-
+messageScroll = 0
 # Tracking if grove controls have changed
 p1Grove_Initial = 0
 p2Grove_Initial = 0
@@ -56,12 +56,12 @@ def main():
     global player2_paddle
     global scoreLimit
     global myFont
-
+    global messageScroll 
     # Initialise PyGame and create screen object
     pygame.init() 
     pygame.font.init()
     screensize = (height, width)
-    myFont = pygame.font.SysFont("monospace", 10*scale)
+    myFont = pygame.font.SysFont("monospace", 8*scale)
     screen = pygame.display.set_mode((screensize))
     pygame.display.set_caption('MMUARCADE2018')
 
@@ -114,12 +114,24 @@ def main():
 
 # RENDER - CONTAINS USED TO DRAW OBJECTS TO THE SCREEN
 def render():
-    global screen 
+    global screen
+    global messageScroll
     screen.fill((0,0,0))   # Black screen for background
     
     # RENDER TEXT
-    label = myFont.render(str(player2_points) ,True, (100,100,100)) 
-    screen.blit(label, (320, 50))
+
+
+    #label = myFont.render(str(player2_points) ,True, (100,100,100))  
+    #screen.blit(label, (320, 50))
+    messageText = "This is a message1 This is a message2 This is a message3"
+    Message = myFont.render(str(messageText) ,True, (100,100,100)) 
+    messageScroll += scale *0.5
+    screen.blit(Message, ((80 * scale )-messageScroll, -3))
+    if messageScroll > len(messageText * scale  * 7):
+       messageScroll = 0
+    #label = myFont.render(str(len(messageText * scale  * 8)) ,True, (100,100,100))  
+    #screen.blit(label, (100, 100))
+
     player1_paddle.render(screen, scale)
     player2_paddle.render(screen, scale)
     ball.render(screen, scale)
