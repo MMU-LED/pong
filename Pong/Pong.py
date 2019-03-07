@@ -121,17 +121,17 @@ def render():
     global screen
     global messageScroll
     screen.fill((0,0,0))   # Black screen for background
-    
+    pygame.draw.line(screen,(100,100,100),(-15,12*scale),(100*scale,12*scale))
     # RENDER TEXT
 
 
     #label = myFont.render(str(player2_points) ,True, (100,100,100))  
     #screen.blit(label, (320, 50))
-    messageText = "This is a message1 This is a message2 This is a message3"
+    messageText = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!?"
     Message = myFont.render(str(messageText) ,True, (100,100,100)) 
     messageScroll += scale *0.5
-    screen.blit(Message, ((80 * scale )-messageScroll, 2))
-    if messageScroll > len(messageText * scale  * 7):
+    screen.blit(Message, ((80 * scale )-messageScroll, 1))
+    if messageScroll > len(messageText * scale  * 8):
        messageScroll = 0
     #label = myFont.render(str(len(messageText * scale  * 8)) ,True, (100,100,100))  
     #screen.blit(label, (100, 100))

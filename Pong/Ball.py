@@ -38,10 +38,10 @@ class Ball(object):
         ball.rect.center = (ball.centerx, ball.centery)          
 
         #if ball hits top of screen, bounce down
-        if ball.rect.top <= 10:                                   
+        if ball.rect.top <= 11*scale:                                   
             ball.direction[1] = ball.direction[1]*-1
         #if ball hits bottom of screen, bounce up
-        elif ball.rect.bottom >= ball.screensize[1]-11:           
+        elif ball.rect.bottom >= ball.screensize[1]-1:           
             ball.direction[1] = ball.direction[1]*-1
 
         #If ball hits right of screen , p1( left ) wins
