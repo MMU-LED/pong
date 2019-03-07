@@ -65,7 +65,7 @@ def main():
     pygame.init() 
     pygame.font.init()
     screensize = (height, width)
-    myFont = pygame.font.SysFont("dotty", 16*scale)
+    myFont = pygame.font.SysFont("dotty", 20*scale)
     screen = pygame.display.set_mode((screensize))
     pygame.display.set_caption('MMUARCADE2018')
 
@@ -127,10 +127,10 @@ def render():
 
     #label = myFont.render(str(player2_points) ,True, (100,100,100))  
     #screen.blit(label, (320, 50))
-    messageText = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!?"
-    Message = myFont.render(str(messageText) ,True, (100,100,100)) 
-    messageScroll += scale *0.5
-    screen.blit(Message, ((80 * scale )-messageScroll, 1))
+    messageText = "This is a message - THIS IS A MESSAGE"
+    Message = myFont.render(str(messageText) ,True, (200,200,200)) 
+    messageScroll += scale *0.1
+    screen.blit(Message, ((80 * scale )-messageScroll, -1))
     if messageScroll > len(messageText * scale  * 8):
        messageScroll = 0
     #label = myFont.render(str(len(messageText * scale  * 8)) ,True, (100,100,100))  
