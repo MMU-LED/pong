@@ -129,7 +129,7 @@ def render():
 
     #label = myFont.render(str(player2_points) ,True, (100,100,100))  
     #screen.blit(label, (320, 50))
-    messageText = "This is a message - THIS IS A MESSAGE"
+    messageText = config.msg
     Message = myFont.render(str(messageText) ,True, (200,200,200)) 
     messageScroll += scale *0.1
     screen.blit(Message, ((80 * scale )-messageScroll, -1))
