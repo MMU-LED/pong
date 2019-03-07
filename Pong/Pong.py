@@ -1,5 +1,7 @@
 import pygame, sys, time
 import config
+import pyglet
+
 #import pygame & sys - sys lets us exit the game
 from Ball import Ball
 from Paddle import Paddle
@@ -40,6 +42,8 @@ messageScroll = 0
 p1Grove_Initial = 0
 p2Grove_Initial = 0
 
+pyglet.font.add_file('dotty.ttf')
+dotty = pyglet.font.load('Dotty')
 
 # Global Keyword needed if want to write to global variable (Not if only reading)
 
@@ -61,7 +65,7 @@ def main():
     pygame.init() 
     pygame.font.init()
     screensize = (height, width)
-    myFont = pygame.font.SysFont("monospace", 8*scale)
+    myFont = pygame.font.SysFont("dotty", 16*scale)
     screen = pygame.display.set_mode((screensize))
     pygame.display.set_caption('MMUARCADE2018')
 
@@ -126,7 +130,7 @@ def render():
     messageText = "This is a message1 This is a message2 This is a message3"
     Message = myFont.render(str(messageText) ,True, (100,100,100)) 
     messageScroll += scale *0.5
-    screen.blit(Message, ((80 * scale )-messageScroll, -3))
+    screen.blit(Message, ((80 * scale )-messageScroll, 2))
     if messageScroll > len(messageText * scale  * 7):
        messageScroll = 0
     #label = myFont.render(str(len(messageText * scale  * 8)) ,True, (100,100,100))  
