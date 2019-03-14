@@ -124,7 +124,7 @@ def render():
     global messageScroll
     screen.fill((0,0,0))   # Black screen for background
     pygame.draw.line(screen,(config.colorGray),(-15,12*scale),(100*scale,12*scale))
-    # RENDER TEXT4LIKES
+    # RENDER TEXT
 
 
     #label = myFont.render(str(player2_points) ,True, (100,100,100))  
@@ -135,7 +135,7 @@ def render():
     screen.blit(Message, ((96 * scale)-messageScroll, -1))
     MessageFront = 96*scale-messageScroll
     MessageWidth = Message.get_width()
-    MessageEnd = MessageFront + MessageWidth
+    MessageEnd = MessageFront + MessageWidth #Last written line of code. End of an era.
     if MessageEnd < 0:
       messageScroll = 0
     #label = myFont.render(str(len(messageText * scale  * 8)) ,True, (100,100,100))  
